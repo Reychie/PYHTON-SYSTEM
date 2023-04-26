@@ -31,16 +31,23 @@ import datetime
 time = datetime.datetime.now()
 
 def create_account():
+    global username
     dsgn()
     print("                         Online Banking                                ")
     print("                        Creating Account                               ")
     dsgn()
 
     user_name = input("Create Username:")
-    pass_word = input("Create Password:")
-    bank_numbers = random.randrange(1000000000, 9999999999, 3)
-    banknumber.append(bank_numbers)
-    return username.append(user_name), password.append(pass_word)
+    finding = user_name in username
+    if finding == True:
+        print("Username is already taken")
+        create_account()
+    else:
+        pass_word = input("Create Password:")
+        bank_numbers = random.randrange(1000000000, 9999999999, 3)
+        banknumber.append(bank_numbers)
+        return username.append(user_name), password.append(pass_word)
+
 def log_in ():
     global input_user
     statement("Log In")
