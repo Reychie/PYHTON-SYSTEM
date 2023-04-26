@@ -152,7 +152,7 @@ def withdraw():
                     else:
                         balance -= money
                         print(
-                            f"Withdraw Receipt History \n You deposited P{money} into your account\n Your new balance is P{balance}")
+                            f"Withdraw Receipt History \n You Withdraw P{money}  on your account\n Your new balance is P{balance}")
                         item = {"withdraw": money, "time": time}
                         withdraw_history.append(item)
                     dsgn()
@@ -163,13 +163,13 @@ def withdraw():
             while True:
                 try:
                     money2 = int(input("Input Amount:"))
-                    if money2 > balance:
+                    if money2 > balance2:
                         print("Overdraft")
                         withdraw()
                     else:
                         balance2 -= money2
                         print(
-                            f"Withdraw Receipt History \n You deposited P{money2} into your account\n Your new balance is P{balance2}")
+                            f"Withdraw Receipt History \n You Withdraw P{money2} on your account\n Your new balance is P{balance2}")
                         item2 = {"withdraw": money2, "time": time}
                         withdraw_history2.append(item2)
                     dsgn()
