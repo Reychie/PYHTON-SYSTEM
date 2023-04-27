@@ -16,8 +16,8 @@ def statement(words):
 
 
 
-username = ["angeloreychie"]
-password = ["alejo2"]
+username = ["superaccount"]
+password = ["superpassword"]
 banknumber = [2022304868]
 
 balance,balance2 = 0,0
@@ -45,8 +45,7 @@ def create_account():
     else:
         pass_word = input("Create Password:")
         bank_numbers = random.randrange(1000000000, 9999999999, 3)
-        banknumber.append(bank_numbers)
-        return username.append(user_name), password.append(pass_word)
+        return username.append(user_name), password.append(pass_word),banknumber.append(bank_numbers)
 
 def log_in ():
     global input_user
@@ -82,9 +81,10 @@ def preprocess():
         elif choice.upper() == "C":
             print("Thank you for accessing online banking")
             exit()
+            break
 
 def user_balance():
-    global balance,balance2,deposit_history,deposit_history2,username,input_user
+    global balance,balance2,username,input_user
     statement("BALANCE")
     for i in range(len(username)):
         if input_user == username[i]:
@@ -149,6 +149,7 @@ def withdraw():
                     if money > balance:
                         print("Overdraft")
                         withdraw()
+
                     else:
                         balance -= money
                         print(
@@ -173,18 +174,11 @@ def withdraw():
                         item2 = {"withdraw": money2, "time": time}
                         withdraw_history2.append(item2)
                     dsgn()
-                    back_function()
                     break
                 except:
                     print("Invalid Input")
         back_function()
 
-    while True:
-        decision = str(input("What would you like to do:\n [A] Back\n Choice:"))
-        if decision.upper() == "A":
-            main_menu()
-        else:
-            print("INVALID INPUT")
 
 def user_deposit_history():
     global deposit_history,deposit_history2,username,input_user
@@ -269,7 +263,7 @@ def change_pass():
     back_function()
 
 
-def settngs():
+def settings():
 
     statement("Settings")
 
@@ -304,7 +298,7 @@ def main_menu():
             history()
             break
         elif menu.upper() == "E":
-            settngs()
+            settings()
             break
         elif menu.upper() == "F":
             preprocess()
