@@ -81,7 +81,6 @@ def preprocess():
         elif choice.upper() == "C":
             print("Thank you for accessing online banking")
             exit()
-            
 
 def user_balance():
     global balance,balance2,username,input_user
@@ -186,6 +185,7 @@ def user_deposit_history():
     insertion_sort(deposit_history2,key="deposit")
 
     statement("Deposit History")
+    print(input_user)
     for i in range(len(username)):
         if input_user == username[i]:
             for x in range(len(deposit_history)):
