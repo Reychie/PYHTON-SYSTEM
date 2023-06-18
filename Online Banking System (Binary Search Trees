@@ -1,0 +1,243 @@
+def insertion_sort(elements):
+    for i in range(1,len(elements)):
+        unsorted_elements = elements[i]
+        j = i - 1
+
+        while j >=0 and unsorted_elements < elements[j]:
+            elements[j+1] = elements[j]
+            j -= 1
+            elements[j+1] = unsorted_elements
+
+
+def dsgn():
+    print("---------------------------------------------------------------------------")
+def statement(words):
+    print(f"-----------------------------{words}--------------------------------------")
+
+
+
+
+
+import random
+import datetime
+
+time = datetime.datetime.now()
+
+class Node:
+    def __init__(self, account):
+        self.account = account
+        self.left = None
+        self.right = None
+
+def insert_node(root, account):
+    if root is None:
+        return Node(account)
+    else:
+        if account["username"] < root.account["username"]:
+            root.left = insert_node(root.left, account)
+        else:
+            root.right = insert_node(root.right, account)
+    return root
+
+def find_node(root, username,password):
+    if root is None or root.account["username"] == username and root.account["password"] == password:
+        return root
+    elif username < root.account["username"]:
+        return find_node(root.left,username,password)
+    return find_node(root.right,username,password)
+
+root = None
+def create_account():
+    global root
+    dsgn()
+    print("                         Online Banking                                ")
+    print("                        Creating Account                               ")
+    dsgn()
+
+    username = str(input("Create Username:"))
+    password = str(input("Create Password:"))
+    account1 = {
+        "username": username,
+        "password": password,
+        "balance": 0,
+        "transaction_history": []
+
+    }
+    root = insert_node(root,account1)
+    return root
+def log_in ():
+    global result
+    while True:
+        try:
+            username = str(input("Enter Username:"))
+            password = str(input("Enter password:"))
+            result = find_node(root,username,password)
+            if username == result.account["username"] and password == result.account["password"]:
+                main_menu()
+                break
+        except:
+            print("Invalid Username or Password")
+            log_in()
+            break
+
+
+def preprocess():
+    while True:
+        statement("Online Banking")
+        choice = input("What would you like to do:\n [A] Login\n [B] Create Account\n [C] Exit\n Choice: ")
+        if choice.upper() == "A":
+            log_in()
+            break
+        elif choice.upper() == "B":
+            create_account()
+        elif choice.upper() == "C":
+            print("Thank you for accessing online banking")
+            exit()
+
+def user_balance():
+    global result
+    statement("BALANCE")
+    print("Your Balance is:P",result.account["balance"])
+    back_function()
+def deposit():
+    global result
+    dsgn()
+    statement("Deposit")
+
+    while True:
+        try:
+            money = int(input("Input Amount:"))
+            result.account["balance"] += money
+            print(
+                f"Deposit Receipt History \n You deposited into your account:P{money}","\nYour new balance is:P",result.account["balance"])
+            transaction = f"Money:{money} Time:{time}  Type:Deposit"
+            trans = result.account["transaction_history"]
+            trans.append(transaction)
+            break
+        except:
+            print("Invalid Input")
+
+    back_function()
+
+def back_function():
+    dsgn()
+    while True:
+        decision = str(input("What would you like to do:\n [A] Back\n Choice:"))
+        if decision.upper() == "A":
+            main_menu()
+        else:
+            print("INVALID INPUT")
+
+
+def withdraw():
+    global result
+    dsgn()
+    statement("Withdraw")
+    while True:
+        try:
+            money = int(input("Input Amount:"))
+            if money > result.account["balance"]:
+                print("Overdraft")
+                withdraw()
+
+            else:
+                result.account["balance"] -= money
+                print(
+                    f"Withdraw Receipt History\n You Withdraw P{money} in your account\n"," Your new balance is P",result.account["balance"])
+                transaction = f"Money:{money} Time:{time}  Type:Withdraw"
+                trans = result.account["transaction_history"]
+                trans.append(transaction)
+            dsgn()
+            break
+        except:
+            print("Invalid Input")
+    back_function()
+
+
+
+
+def history():
+    global result
+    insertion_sort(result.account["transaction_history"])
+    for i in result.account["transaction_history"]:
+        print(i)
+
+def change_user():
+    global username
+    while True:
+        dsgn()
+        current_username = str(input("Enter your current username:"))
+        finding = current_username in result.account["username"]
+        if finding == True:
+            dsgn()
+            new_username = str(input("Enter your new username:"))
+            result.account["username"] = new_username
+            break
+        else:
+            print("Invalid Input Username")
+
+    back_function()
+def change_pass():
+    global password
+    while True:
+        dsgn()
+        current_password = str(input("Enter your current password:"))
+        finding = current_password in result.account["password"]
+        if finding == True:
+            dsgn()
+            new_password = str(input("Enter your new password:"))
+            result.account["password"] = new_password
+            break
+        else:
+            print("Invalid Input Password")
+
+    back_function()
+
+
+def settings():
+
+    statement("Settings")
+
+    while True:
+        change = str(input(f" [A] Change Username\n [B] Change Password\n choice:"))
+
+        if change.upper() == "A":
+            change_user()
+        elif change.upper() == "B":
+            change_pass()
+        else:
+            print("Invalid Input")
+
+
+
+
+def main_menu():
+
+    statement("MAIN MENU")
+    while True:
+        menu = str(input(f" [A] Deposit\n [B] Withdrawal\n [C] Balance\n [D] History\n [E] Settings\n [F] Logout\n Choice:"))
+        if menu.upper() == "A":
+            deposit()
+            break
+        elif menu.upper() == "B":
+            withdraw()
+            break
+        elif menu.upper() == "C":
+            user_balance()
+            break
+        elif menu.upper() == "D":
+            history()
+            break
+        elif menu.upper() == "E":
+            settings()
+            break
+        elif menu.upper() == "F":
+            preprocess()
+        else:
+            print("INVALID INPUT")
+
+def all_processes():
+    preprocess()
+    main_menu()
+
+all_processes()
